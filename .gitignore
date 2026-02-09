@@ -1,0 +1,20 @@
+# Simulation
+*.vvp *.vpd *.vcd *.fst
+
+# VCS
+simv* DVEfiles/ urg_report/
+
+# Xcelium
+xcelium.d/
+
+# Questa
+work/ *.wlf
+
+# Logs
+*.log
+
+# OS
+.DS_Store *.swp *~
+
+# IDE
+.vscode/ *.sublime-*
