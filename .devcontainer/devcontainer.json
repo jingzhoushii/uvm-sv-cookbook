@@ -1,0 +1,16 @@
+{
+  "name": "UVM-SV Cookbook",
+  "image": "ghcr.io/jingzhoushii/uvm-sv-cookbook:latest",
+  "remoteUser": "root",
+  "settings": {
+    "remote.containers.copyHomeGitConfiguration": true,
+    "remote.containers.remoteUser": "root"
+  },
+  "extensions": [
+    "ms-vscode.vscode-systemverilog",
+    "ms-python.python",
+    "eamodio.gitlens"
+  ],
+  "postCreateCommand": "pip3 install -r requirements.txt || true",
+  "devPort": 3000
+}

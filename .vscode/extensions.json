@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-vscode.vscode-systemverilog",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "yzhang.markdown-all-in-one",
+    "ms-python.python",
+    "formulahendry.auto-complete-shell"
+  ]
+}

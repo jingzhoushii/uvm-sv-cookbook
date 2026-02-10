@@ -1,0 +1,30 @@
+{
+  "files.associations": {
+    "*.sv": "systemverilog",
+    "*.svh": "systemverilog",
+    "*.v": "verilog"
+  },
+  
+  "verilog.linting.linter": "vcs",
+  "verilog.linting.extraArgs": [
+    "-sverilog",
+    "-timescale=1ns/1ps"
+  ],
+  
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  
+  "python.defaultInterpreterPath": "/usr/bin/python3",
+  "python.linting.enabled": true,
+  
+  "terminal.integrated.defaultProfile.linux": "bash",
+  
+  "extensionsRecommendationDisabledByDefault": [
+    "ms-vscode.cpptools"
+  ],
+  
+  "[systemverilog]": {
+    "editor.defaultFormatter": "ms-vscode.vscode-systemverilog"
+  }
+}

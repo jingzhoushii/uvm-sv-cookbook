@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile",
+      "type": "shell",
+      "command": "make compile SIM=vcs",
+      "group": "build",
+      "problemMatcher": ["$verilog"],
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Run",
+      "type": "shell", 
+      "command": "make run SIM=vcs",
+      "group": "test",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Clean",
+      "type": "shell",
+      "command": "make clean",
+      "group": "build",
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Regression",
+      "type": "shell",
+      "command": "python3 regress/run.py",
+      "group": "test",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Stats",
+      "type": "shell",
+      "command": "make stats",
+      "presentation": {
+        "reveal": "silent"
+      }
+    }
+  ]
+}

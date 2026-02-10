@@ -1,0 +1,41 @@
+# ============================================================================
+# UVM-SV Cookbook Docker Compose
+# ============================================================================
+
+version: '3.8'
+
+services:
+  uvm-cookbook:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    container_name: uvm-cookbook
+    volumes:
+      - .:/workspace/uvm-sv-cookbook
+    working_dir: /workspace/uvm-sv-cookbook
+    tty: true
+    stdin_open: true
+    environment:
+      - UVM_HOME=/opt/uvm-1800.2-2021
+    command: /bin/bash
+
+  # 运行回归测试
+  test:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspace/uvm-sv-cookbook
+    working_dir: /workspace/uvm-sv-cookbook
+    command: python3 regress/run.py --compile-only
+
+  # 生成报告
+  report:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspace/uvm-sv-cookbook
+      - ./reports:/workspace/uvm-sv-cookbook/reports
+    working_dir: /workspace/uvm-sv-cookbook
+    command: python3 regress/run.py --verbose
