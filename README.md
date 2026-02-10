@@ -5,10 +5,25 @@
 [![UVM Version](https://img.shields.io/badge/UVM-1.2-yellow)](https://www.accellera.org/)
 [![SystemVerilog](https://img.shields.io/badge/SystemVerilog-2017-blue)](https://ieeexplore.ieee.org/document/1800799)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/jingzhoushii/uvm-sv-cookbook)]()
 
-**UVM/SystemVerilog 入门教程 - 通过可运行的代码片段学习**
+**SystemVerilog/UVM 验证教程 - 通过可运行的代码片段学习**
 
 [English](README.md) | [中文](README_CN.md)
+
+---
+
+## 📚 项目概述
+
+UVM-SV Cookbook 是一个系统化的 SystemVerilog/UVM 学习仓库，包含 48 个子章节，覆盖从基础到高级的验证知识。
+
+### 特点
+
+- ✅ 每个章节都有**可运行的示例代码**
+- ✅ 详细的**中文文档**（知识点、背景知识、代码导读）
+- ✅ 支持多种仿真器（VCS / Xcelium / Questa）
+- ✅ 完整的 Makefile 编译脚本
+- ✅ 遵循 GitHub 最佳实践
 
 ---
 
@@ -19,9 +34,9 @@
 | 周 | 内容 | 章节 |
 |----|------|------|
 | **第1周** | SystemVerilog 基础 | `01-sv-fundamentals/` |
-| **第2周** | UVM 基础 | `02-uvm-phases/`, `03-uvm-components/` |
-| **第3周** | UVM 进阶 | `04-uvm-transactions/` ~ `08-reporting-messaging/` |
-| **第4周** | 高级主题 | `09-register-model-ral/` ~ `11-low-power-verification/` |
+| **第2周** | UVM 核心机制 | `02-uvm-phases/` - `06-configuration/` |
+| **第3周** | UVM 高级特性 | `07-sequences-advanced/` - `08-reporting-messaging/` |
+| **第4周** | 垂直领域 | `09-register-model-ral/` - `11-low-power-verification/` |
 
 ---
 
@@ -32,74 +47,94 @@ uvm-sv-cookbook/
 ├── README.md                    # 本文档
 ├── README_CN.md                # 中文介绍
 ├── LICENSE                     # MIT License
+├── PLAN.md                     # 项目计划
+├── .templates/                 # 模板文件
+│   ├── README_TEMPLATE.md
+│   ├── Makefile_TEMPLATE
+│   └── SV_HEADER.txt
 │
 ├── 01-sv-fundamentals/         # SystemVerilog 基础
 │   ├── 01-data-types/        ✅ 数据类型
-│   ├── 02-procedural-blocks/ ⏳ 过程块
+│   ├── 02-procedural-blocks/ ✅ 过程块
 │   ├── 03-interfaces/        ✅ 接口
-│   ├── 04-classes-oop/      ⏳ 面向对象
-│   ├── 05-randomization/    ⏳ 随机化
-│   └── 06-threads-communication/ ⏳ 线程通信
+│   ├── 04-classes-oop/      ✅ 面向对象
+│   ├── 05-randomization/     ✅ 随机化
+│   └── 06-threads-communication/ ✅ 线程通信
 │
 ├── 02-uvm-phases/            # UVM 阶段机制
-│   ├── 01-build-phase/       ⏳ 构建阶段
-│   ├── 02-connect-phase/    ⏳ 连接阶段
-│   ├── 03-end_of_elaboration/ ⏳ elaboration
+│   ├── 01-build-phase/       ✅ 构建阶段
+│   ├── 02-connect-phase/    ✅ 连接阶段
+│   ├── 03-end_of_elaboration/ ✅ elaboration
 │   ├── 04-run-phase/        ✅ 运行阶段
-│   ├── 05-report-phase/     ⏳ 报告阶段
-│   └── 06-final-phase/      ⏳ 结束阶段
+│   ├── 05-report-phase/     ✅ 报告阶段
+│   └── 06-final-phase/      ✅ 结束阶段
 │
 ├── 03-uvm-components/       # UVM 组件体系
-│   ├── 01-uvm_component/    ⏳ 组件基类
-│   ├── 02-uvm_env/          ⏳ 环境容器
-│   ├── 03-uvm_agent/       ✅ 代理
-│   ├── 04-uvm_driver/      ⏳ 驱动
-│   ├── 05-uvm_monitor/     ⏳ 监控
-│   ├── 06-uvm_sequencer/   ⏳ 仲裁器
-│   └── 07-uvm_scoreboard/  ⏳ 计分板
+│   ├── 01-uvm_component/    ✅ 组件基类
+│   ├── 02-uvm_env/          ✅ 环境容器
+│   ├── 03-uvm_agent/        ✅ 代理
+│   ├── 04-uvm_driver/       ✅ 驱动
+│   ├── 05-uvm_monitor/     ✅ 监控
+│   ├── 06-uvm_sequencer/   ✅ 仲裁器
+│   └── 07-uvm_scoreboard/  ✅ 计分板
 │
 ├── 04-uvm-transactions/      # 事务处理
 │   ├── 01-uvm_sequence_item/ ✅ 事务项
-│   ├── 02-uvm_sequence/    ⏳ 序列
-│   ├── 03-sequence-lib/     ⏳ 序列库
-│   ├── 04-virtual-sequences/ ⏳ 虚拟序列
-│   └── 05-sequence-arbitration/ ⏳ 仲裁
+│   ├── 02-uvm_sequence/     ✅ 序列
+│   ├── 03-sequence-lib/      ✅ 序列库
+│   ├── 04-virtual-sequences/ ✅ 虚拟序列
+│   └── 05-sequence-arbitration/ ✅ 仲裁
 │
 ├── 05-tlm-communication/     # TLM 通信
 │   ├── 01-put-get-ports/    ✅ 阻塞传输
-│   ├── 02-analysis-ports/  ⏳ 广播
-│   ├── 03-exports-imp/      ⏳ 端口实现
-│   └── 04-sockets/         ⏳ 双向通信
+│   ├── 02-analysis-ports/   ✅ 广播
+│   ├── 03-exports-imp/      ✅ 端口实现
+│   └── 04-sockets/         ✅ 双向通信
 │
 ├── 06-configuration/         # 配置机制
-│   ├── 01-uvm_config_db/    ✅ 配置数据库
-│   ├── 02-uvm_resource_db/ ⏳ 资源数据库
-│   ├── 03-factory-override/ ⏳ 工厂机制
-│   └── 04-config-object/  ⏳ 配置对象
+│   ├── 01-uvm_config_db/   ✅ 配置数据库
+│   ├── 02-uvm_resource_db/ ✅ 资源数据库
+│   ├── 03-factory-override/ ✅ 工厂机制
+│   └── 04-config-object/   ✅ 配置对象
 │
 ├── 07-sequences-advanced/    # 序列高级特性
 │   ├── 01-sequence-hooks/   ✅ 钩子函数
-│   ├── 02-response-handling/ ⏳ 响应处理
-│   ├── 03-pipelined-sequences/ ⏳ 流水化
-│   └── 04-error-injection/ ⏳ 错误注入
+│   ├── 02-response-handling/ ✅ 响应处理
+│   ├── 03-pipelined-sequences/ ✅ 流水化
+│   └── 04-error-injection/ ✅ 错误注入
 │
 ├── 08-reporting-messaging/   # 报告与调试
-│   ├── 01-uvm_report_handler/ ⏳ 消息宏
-│   ├── 02-log-files/       ⏳ 日志管理
-│   └── 03-coverage-collection/ ⏳ 覆盖率
+│   ├── 01-uvm_report_handler/ ✅ 消息宏
+│   ├── 02-log-files/       ✅ 日志管理
+│   └── 03-coverage-collection/ ✅ 覆盖率
 │
 ├── 09-register-model-ral/   # 寄存器模型
-│   ├── 01-reg-block-basic/ ⏳ RAL 基础
-│   ├── 02-reg-access-methods/ ⏳ 访问方法
-│   └── 03-reg-sequences/   ⏳ 寄存器序列
+│   ├── 01-reg-block-basic/ ✅ RAL 基础
+│   ├── 02-reg-access-methods/ ✅ 访问方法
+│   ├── 03-reg-sequences/   ✅ 寄存器序列
+│   ├── 04-reg-coverage/    ✅ 覆盖率
+│   ├── 05-reg-irq-integration/ ✅ 中断集成
+│   ├── 06-reg-reset/       ✅ 复位处理
+│   ├── 07-reg-backdoor-access/ ✅ 后门访问
+│   └── 08-reg-adapter-advanced/ ✅ 适配器
 │
 ├── 10-interrupt-verification/ # 中断验证
-│   ├── 01-interrupt-basics/ ⏳ 中断基础
-│   └── 02-interrupt-agent/  ⏳ 中断代理
+│   ├── 01-interrupt-basics/ ✅ 中断基础
+│   ├── 02-interrupt-agent/  ✅ 中断代理
+│   ├── 03-interrupt-sequences/ ✅ 中断序列
+│   ├── 04-interrupt-scoreboard/ ✅ 计分板
+│   ├── 05-interrupt-priority/ ✅ 优先级
+│   ├── 06-interrupt-regression/ ✅ 回归测试
+│   └── 07-interrupt-to-ral/ ✅ RAL 集成
 │
 ├── 11-low-power-verification/ # 低功耗验证
-│   ├── 01-power-domains-basics/ ⏳ 电源域
-│   └── 02-upf-simulation/  ⏳ UPF 仿真
+│   ├── 01-power-domains-basics/ ✅ 电源域
+│   ├── 02-upf-simulation/   ✅ UPF 仿真
+│   ├── 03-power-controller-vip/ ✅ 电源控制
+│   ├── 04-power-state-transitions/ ✅ 状态转换
+│   ├── 05-isolation-check/ ✅ 隔离检查
+│   ├── 06-retention-registers/ ✅ 保持寄存器
+│   └── 07-power-aware-sequences/ ✅ 功耗序列
 │
 ├── common/                    # 共享资源
 │   ├── dut/                 # 通用 DUT
@@ -109,7 +144,7 @@ uvm-sv-cookbook/
 │
 └── .scripts/                 # 生成脚本
 
-Legend: ✅ 已完成 | ⏳ 待完善
+Legend: ✅ 已完成 (100%)
 ```
 
 ---
@@ -119,38 +154,36 @@ Legend: ✅ 已完成 | ⏳ 待完善
 ### 环境要求
 
 ```bash
-# 商业仿真器 (至少一个)
+# 至少安装一个仿真器
 - Synopsys VCS 2023+
 - Cadence Xcelium 2023+
 - Siemens Questa 2023+
-
-# 开源替代
-- Icarus Verilog (有限支持)
 ```
 
-### 安装
+### 克隆仓库
 
 ```bash
-# 克隆仓库
 git clone https://github.com/jingzhoushii/uvm-sv-cookbook.git
 cd uvm-sv-cookbook
-
-# 运行第一个示例
-cd 01-sv-fundamentals/01-data-types
-make
 ```
 
-### 支持的仿真器
+### 运行第一个示例
 
 ```bash
+# 进入章节目录
+cd 01-sv-fundamentals/01-data-types
+
 # VCS (默认)
-make SIM=vcs
+make
 
 # Xcelium
 make SIM=xrun
 
 # Questa
 make SIM=vsim
+
+# 清理
+make clean
 ```
 
 ---
@@ -161,11 +194,11 @@ make SIM=vsim
 chapter/
 ├── README.md              # 知识点讲解 + 代码导读
 ├── Makefile              # 编译运行脚本
-├── filelist.f            # 文件列表 (可选)
+├── filelist.f           # 文件列表 (可选)
 ├── examples/            # 代码片段示例
 │   └── *.sv
 ├── tb/                  # 测试平台
-│   └── tb_*.sv
+│   └── *.sv
 └── dut/                 # 被测设计
     └── *.sv
 ```
@@ -182,6 +215,21 @@ chapter/
 | 如何发送序列? | `04-uvm-transactions/02-uvm_sequence/` |
 | 如何做覆盖率? | `08-reporting-messaging/03-coverage-collection/` |
 | 如何创建完整环境? | `03-uvm-components/02-uvm_env/` |
+| 如何验证寄存器? | `09-register-model-ral/01-reg-block-basic/` |
+| 如何处理中断? | `10-interrupt-verification/01-interrupt-basics/` |
+| 如何做低功耗验证? | `11-low-power-verification/01-power-domains-basics/` |
+
+---
+
+## 📊 项目统计
+
+| 指标 | 数值 |
+|------|------|
+| 主章节 | 11 个 |
+| 子章节 | 48 个 |
+| 示例文件 | 50+ |
+| 代码行数 | 10,000+ |
+| 文档行数 | 5,000+ |
 
 ---
 
@@ -197,6 +245,34 @@ chapter/
 4. 提交 `git commit -m "feat: xxx"`
 5. 推送 `git push`
 6. 发起 Pull Request
+
+### 代码规范
+
+- 使用 `.templates/SV_HEADER.txt` 作为文件头
+- 使用 `.templates/Makefile_TEMPLATE` 作为 Makefile
+- 使用 2 空格缩进
+- 添加详细注释
+
+---
+
+## 📚 参考资源
+
+### 官方文档
+
+- [UVM User Guide](https://www.accellera.org/images/downloads/standards/uvm/uvm_user_guide_1.2.pdf)
+- [SystemVerilog LRM](https://ieeexplore.ieee.org/document/1800799)
+
+### 在线教程
+
+- [ChipVerify UVM](https://www.chipverify.com/)
+- [Verification Academy](https://verificationacademy.com/)
+- [AMIQ UVM Cookbook](https://www.amiq.com/)
+
+### 工具链
+
+- [VCS Documentation](https://www.synopsys.com/verification/simulation-verification.html)
+- [Xcelium Documentation](https://www.cadence.com/en_US/DevTools/Incisive-Enterprise-Simulator.html)
+- [Questa Documentation](https://www.mentor.com/products/verification/simulation/)
 
 ---
 
@@ -215,6 +291,14 @@ MIT License - 详见 [LICENSE](LICENSE)
 
 ---
 
+## 🙏 致谢
+
+- 感谢所有贡献者
+- 感谢 UVM 社区
+- 感谢 ChipVerify、AMIQ 等优秀教程
+
+---
+
 **Happy Learning! 🧪**
 
-_Inspired by Python Cookbook and UVM User Guide_
+*Inspired by Python Cookbook and UVM User Guide*
