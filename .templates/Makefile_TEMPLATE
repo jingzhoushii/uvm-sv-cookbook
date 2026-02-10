@@ -1,0 +1,99 @@
+# ============================================================
+# Makefile - Chapter Name
+# 支持: VCS, Xcelium, Questa
+# ============================================================
+
+SIM ?= vcs
+UVM_HOME ?= /opt/uvm-1800.2-2021
+
+# 源文件
+SRC = examples/*.sv
+TB = tb/*.sv
+DUT = dut/*.sv
+
+# 输出
+TOP = tb_top
+WAVE = dump.vcd
+
+.PHONY: all compile run clean help
+
+# 默认目标
+all: compile run
+
+# 编译
+compile:
+	@echo "========================================"
+	@echo "  Compiling with $(SIM)"
+	@echo "========================================"
+ifeq ($(SIM),vcs)
+	vcs -sverilog -timescale 1ns/1ps \
+		+incdir+$(UVM_HOME) \
+		$(UVM_HOME)/src/uvm.sv \
+		$(SRC) $(TB) $(DUT) \
+		-o $(TOP) \
+		-l compile.log
+else ifeq ($(SIM),xrun)
+	xrun -sv \
+		-timescale 1ns/1ps \
+		-uvm $(UVM_HOME)/src \
+		$(SRC) $(TB) $(DUT) \
+		-elab $(TOP) \
+		-logfile compile.log
+else ifeq ($(SIM),vsim)
+	vlog -sv -timescale 1ns/1ps \
+		+incdir+$(UVM_HOME) \
+		$(UVM_HOME)/src/uvm.sv \
+		$(SRC) $(TB) $(DUT) \
+		-work work
+endif
+	@echo "  [OK] Compilation complete"
+
+# 运行
+run: compile
+	@echo "========================================"
+	@echo "  Running simulation"
+	@echo "========================================"
+ifeq ($(SIM),vcs)
+	./$(TOP) -l $(WAVE)
+else ifeq ($(SIM),xrun)
+	./$(TOP) -l $(WAVE)
+else ifeq ($(SIM),vsim)
+	vsim -c -do "run -all; quit"
+endif
+	@echo "  [OK] Simulation complete"
+
+# 查看波形
+wave:
+ifeq ($(SIM),vcs)
+	@if [ -f "$(WAVE)" ]; then \
+		gtkwave $(WAVE); \
+	else \
+		echo "Wavefile $(WAVE) not found"; \
+	fi
+else
+	@echo "Wave viewing not configured for $(SIM)"
+endif
+
+# 清理
+clean:
+	@echo "Cleaning..."
+	rm -rf $(TOP) work *.vcd *.log *.dag
+	@echo "  [OK] Clean complete"
+
+# 帮助
+help:
+	@echo "UVM-SV Cookbook - Chapter Makefile"
+	@echo ""
+	@echo "Usage: make [target] [SIM=<simulator>]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  all      - Compile and run (default)"
+	@echo "  compile  - Compile only"
+	@echo "  run      - Run simulation"
+	@echo "  wave     - Open waveform viewer"
+	@echo "  clean    - Clean build files"
+	@echo ""
+	@echo "Simulators:"
+	@echo "  vcs   - Synopsys VCS (default)"
+	@echo "  xrun  - Cadence Xcelium"
+	@echo "  vsim  - Siemens Questa"

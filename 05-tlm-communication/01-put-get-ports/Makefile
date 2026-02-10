@@ -1,26 +1,19 @@
-# ============================================================
-# Makefile - 01-data-types
-# ============================================================
-
 SIM ?= vcs
 UVM_HOME ?= /opt/uvm-1800.2-2021
 
-SRC = examples/*.sv tb/*.sv dut/*.sv
-TOP = tb_data_types
+SRC = examples/*.sv
+TOP = tb_tlm
 WAVE = dump.vcd
-
-.PHONY: all compile run clean
 
 all: compile run
 
 compile:
-	@echo "Compiling 01-data-types..."
+	@echo "Compiling 01-put-get-ports..."
 ifeq ($(SIM),vcs)
 	vcs -sverilog -timescale 1ns/1ps \
 		+incdir+$(UVM_HOME) $(UVM_HOME)/src/uvm.sv \
 		$(SRC) -o $(TOP) -l compile.log
 endif
-	@echo "[OK]"
 
 run: compile
 ifeq ($(SIM),vcs)

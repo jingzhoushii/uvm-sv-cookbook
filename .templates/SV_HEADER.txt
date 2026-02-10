@@ -1,0 +1,24 @@
+// ============================================================================
+// @file    : filename.sv
+// @author  : jingzhoushii
+// @date    : 2026-02-10
+// @version : v1.0
+// @brief   : Brief description of this file
+// @note    : Key points or caveats
+// ============================================================================
+//
+// Usage:
+//   - How to use this file
+//   - Dependencies
+//
+// Change Log:
+//   v1.0 - Initial version
+//
+// ============================================================================
+
+`timescale 1ns/1ps
+
+// Module/Class definition
+// ============================================================================
+
+`endif // FILENAME_SV
