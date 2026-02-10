@@ -1,129 +1,13 @@
 // ============================================================================
 // @file    : 01_connect_phase.sv
-// @brief   : connect_phase 演示
-// @note    : 展示 TLM 端口连接
+// @brief   : connect_phase 完整示例
 // ============================================================================
-
 `timescale 1ns/1ps
 
-class txn extends uvm_sequence_item;
-    rand bit [31:0] addr;
-    `uvm_object_utils_begin(txn)
-        `uvm_field_int(addr, UVM_ALL_ON)
-    `uvm_object_utils_end
-endclass
+class txn extends uvm_sequence_item; rand bit[7:0] d; `uvm_object_utils_begin(txn) `uvm_field_int(d,UVM_ALL_ON) `uvm_object_utils_end endclass
 
-// Monitor
-class my_monitor extends uvm_monitor;
-    `uvm_component_utils(my_monitor)
-    uvm_analysis_port#(txn) ap;
-    
-    function new(string name, uvm_component parent);
-        super.new(name, parent);
-        ap = new("ap", this);
-    endfunction
-    
-    virtual function void connect_phase(uvm_phase phase);
-        super.connect_phase(phase);
-        `uvm_info(get_type_name(), "connect_phase()", UVM_LOW)
-    endfunction
-    
-    virtual task run_phase(uvm_phase phase);
-        phase.raise_objection(this);
-        #50;
-        phase.drop_objection(this);
-    endtask
-endclass
+class prod extends uvm_component; `uvm_component_utils(prod) uvm_analysis_port#(txn) ap; function new(string n,uvm_component p);super.new(n,p);ap=new("ap",this);endfunction task run_phase(uvm_phase ph); ph.raise_objection(this); repeat(3) begin txn t; t=txn::type_id::create("t"); void'(t.randomize()); ap.write(t); #10; end ph.drop_objection(this); endtask endclass
 
-// Scoreboard
-class my_scoreboard extends uvm_scoreboard;
-    `uvm_component_utils(my_scoreboard)
-    uvm_analysis_imp#(txn, my_scoreboard) analysis_export;
-    int count;
-    
-    function new(string name, uvm_component parent);
-        super.new(name, parent);
-        analysis_export = new("analysis_export", this);
-    endfunction
-    
-    virtual function void write(txn tr);
-        count++;
-        `uvm_info(get_type_name(), 
-            $sformatf("Received txn #%0d: addr=0x%0h", count, tr.addr), 
-            UVM_LOW)
-    endfunction
-    
-    virtual function void connect_phase(uvm_phase phase);
-        super.connect_phase(phase);
-        `uvm_info(get_type_name(), "connect_phase()", UVM_LOW)
-    endfunction
-    
-    virtual task run_phase(uvm_phase phase);
-        phase.raise_objection(this);
-        #100;
-        phase.drop_objection(this);
-    endtask
-endclass
+class cons extends uvm_component; `uvm_component_utils(cons) uvm_analysis_imp#(txn,cons) imp; int c; function new(string n,uvm_component p);super.new(n,p);imp=new("imp",this);c=0;endfunction virtual function void write(txn t); c++; `uvm_info(get_name(),$sformatf("got#%0d d=%0d",c,t.d),UVM_LOW) endfunction task run_phase(uvm_phase ph); ph.raise_objection(this); #100; ph.drop_objection(this); endtask endclass
 
-// Agent
-class my_agent extends uvm_agent;
-    `uvm_component_utils(my_agent)
-    
-    my_monitor mon;
-    my_scoreboard sb;
-    
-    function new(string name, uvm_component parent);
-        super.new(name, parent);
-    endfunction
-    
-    virtual function void build_phase(uvm_phase phase);
-        super.build_phase(phase);
-        mon = my_monitor::type_id::create("mon", this);
-        sb = my_scoreboard::type_id::create("sb", this);
-    endfunction
-    
-    virtual function void connect_phase(uvm_phase phase);
-        super.connect_phase(phase);
-        
-        `uvm_info(get_type_name(), "connect_phase()", UVM_LOW)
-        
-        // 【核心】Monitor -> Scoreboard 连接
-        mon.ap.connect(sb.analysis_export);
-        
-        `uvm_info(get_type_name(), "Connected mon.ap -> sb.analysis_export", 
-            UVM_LOW)
-    endfunction
-    
-    virtual task run_phase(uvm_phase phase);
-        phase.raise_objection(this);
-        #100;
-        phase.drop_objection(this);
-    endtask
-endclass
-
-module tb_connect_phase;
-    
-    initial begin
-        $display("========================================");
-        $display("  connect_phase Demo");
-        $display("========================================");
-        $display("");
-        
-        my_agent agent;
-        agent = my_agent::type_id::create("agent", null);
-        
-        #200;
-        
-        $display("");
-        $display("========================================");
-        $display("  connect_phase Demo Complete!");
-        $display("========================================");
-        $finish;
-    end
-    
-    initial begin
-        $dumpfile("dump.vcd");
-        $dumpvars(0, tb_connect_phase);
-    end
-    
-endmodule
+module tb_connect; initial begin $display("Connect Phase Demo"); prod p; cons c; p=new("p",null); c=new("c",null); p.ap.connect(c.imp); #200; $finish; end initial $dumpfile("dump.vcd"); $dumpvars(0,tb_connect); endmodule
