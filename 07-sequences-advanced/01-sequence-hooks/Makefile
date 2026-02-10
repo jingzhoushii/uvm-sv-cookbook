@@ -1,5 +1,5 @@
 # ============================================================================
-# Makefile - 01-uvm_sequence_item
+# Makefile - 01-sequence-hooks
 # ============================================================================
 
 SIM ?= vcs
@@ -7,7 +7,7 @@ UVM_HOME ?= /opt/uvm-1800.2-2021
 
 SRC = examples/*.sv
 
-TOP = tb_seq_item
+TOP = tb_hooks
 WAVE = dump.vcd
 
 .PHONY: all compile run clean help
@@ -15,7 +15,7 @@ WAVE = dump.vcd
 all: compile run
 
 compile:
-	@echo "Compiling 01-uvm_sequence_item..."
+	@echo "Compiling 01-sequence-hooks..."
 ifeq ($(SIM),vcs)
 	vcs -sverilog -timescale 1ns/1ps \
 		+incdir+$(UVM_HOME) \
