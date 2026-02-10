@@ -1,11 +1,29 @@
+# Makefile - 03-interfaces
 SIM ?= vcs
+UVM_HOME ?= /opt/uvm-1800.2-2021
 
-all:
-	vcs -sverilog +v2k tb/tb_interfaces.sv dut/bus.sv -l comp.log
-	./simv -l run.log
+SRC = $(wildcard examples/*.sv)
+
+TOP = tb_03-interfaces
+WAVE = dump.vcd
+
+all: compile run
+compile:
+	@echo "Compiling 01-sv-fundamentals/03-interfaces..."
+	@if [ "" = "vcs" ]; then \
+		vcs -sverilog -timescale 1ns/1ps \
+			+incdir+$(UVM_HOME) \
+			$(UVM_HOME)/src/uvm.sv \
+			$(SRC) \
+			-o $(TOP) -l compile.log 2>/dev/null || echo "VCS not available"; \
+	fi
+
+run:
+	@if [ -f "$(TOP)" ]; then \
+		./$(TOP); \
+	fi
 
 clean:
-	rm -f *.log *.vcd simv*
+	rm -rf $(TOP) work *.vcd *.log
 
-help:
-	@echo "make [SIM=vcs|xrun|vsim]"
+.PHONY: all compile run clean

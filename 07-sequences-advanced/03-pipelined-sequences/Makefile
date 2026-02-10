@@ -1,15 +1,15 @@
-# Makefile - 04-run-phase
+# Makefile - 03-pipelined-sequences
 SIM ?= vcs
 UVM_HOME ?= /opt/uvm-1800.2-2021
 
 SRC = $(wildcard examples/*.sv)
 
-TOP = tb_04-run-phase
+TOP = tb_03-pipelined-sequences
 WAVE = dump.vcd
 
 all: compile run
 compile:
-	@echo "Compiling 02-uvm-phases/04-run-phase..."
+	@echo "Compiling 07-sequences-advanced/03-pipelined-sequences..."
 	@if [ "" = "vcs" ]; then \
 		vcs -sverilog -timescale 1ns/1ps \
 			+incdir+$(UVM_HOME) \

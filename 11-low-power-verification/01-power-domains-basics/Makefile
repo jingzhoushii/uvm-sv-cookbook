@@ -1,15 +1,15 @@
-# Makefile - 04-run-phase
+# Makefile - 01-power-domains-basics
 SIM ?= vcs
 UVM_HOME ?= /opt/uvm-1800.2-2021
 
 SRC = $(wildcard examples/*.sv)
 
-TOP = tb_04-run-phase
+TOP = tb_01-power-domains-basics
 WAVE = dump.vcd
 
 all: compile run
 compile:
-	@echo "Compiling 02-uvm-phases/04-run-phase..."
+	@echo "Compiling 11-low-power-verification/01-power-domains-basics..."
 	@if [ "" = "vcs" ]; then \
 		vcs -sverilog -timescale 1ns/1ps \
 			+incdir+$(UVM_HOME) \

@@ -1,15 +1,15 @@
-# Makefile - 04-run-phase
+# Makefile - 07-uvm_scoreboard
 SIM ?= vcs
 UVM_HOME ?= /opt/uvm-1800.2-2021
 
 SRC = $(wildcard examples/*.sv)
 
-TOP = tb_04-run-phase
+TOP = tb_07-uvm_scoreboard
 WAVE = dump.vcd
 
 all: compile run
 compile:
-	@echo "Compiling 02-uvm-phases/04-run-phase..."
+	@echo "Compiling 03-uvm-components/07-uvm_scoreboard..."
 	@if [ "" = "vcs" ]; then \
 		vcs -sverilog -timescale 1ns/1ps \
 			+incdir+$(UVM_HOME) \
