@@ -1,0 +1,84 @@
+# ============================================================================
+# UVM-SV Cookbook - Root Makefile
+# ============================================================================
+
+SIM ?= vcs
+UVM_HOME ?= /opt/uvm-1800.2-2021
+
+.PHONY: all help clean test docs stats
+
+all:
+	@echo "========================================"
+	@echo "  UVM-SV Cookbook"
+	@echo "========================================"
+	@echo ""
+	@echo "Usage: make [target] [SIM=<simulator>]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  all      - Show this help"
+	@echo "  test     - Run regression tests"
+	@echo "  docs     - Check documentation"
+	@echo "  stats    - Show code statistics"
+	@echo "  clean    - Clean all build files"
+	@echo ""
+	@echo "Examples:"
+	@echo "  make test SIM=vcs"
+	@echo "  make stats"
+	@echo ""
+	@echo "Simulators:"
+	@echo "  vcs   - Synopsys VCS (default)"
+	@echo "  xrun  - Cadence Xcelium"
+	@echo "  vsim  - Siemens Questa"
+	@echo ""
+	@echo "Chapters:"
+	@ls -d 0*/
+
+clean:
+	@echo "Cleaning all build files..."
+	find . -name "*.vcd" -delete
+	find . -name "*.log" -delete
+	find . -name "*.dag" -delete
+	find . -name "DVEfiles" -exec rm -rf {} \; 2>/dev/null || true
+	find . -name "work" -exec rm -rf {} \; 2>/dev/null || true
+	find . -name "simv*" -type f -delete 2>/dev/null || true
+	@echo "  [OK] Clean complete"
+
+test:
+	@echo "Running regression tests..."
+	cd regress && python3 run.py --help >/dev/null 2>&1 && \
+		python3 run.py || echo "Install python3 first"
+
+docs:
+	@echo "Checking documentation..."
+	@echo "README files: $$(find . -name "README.md" | grep -v ".git" | wc -l)"
+	@echo "Missing README:"
+	@for ch in 0*/; do \
+		if [ ! -f "$$ch/README.md" ]; then \
+			echo "  - $$ch"; \
+		fi \
+	done
+
+stats:
+	@echo "========================================"
+	@echo "  UVM-SV Cookbook Statistics"
+	@echo "========================================"
+	@echo ""
+	@echo "SV files:       $$(find . -name "*.sv" | grep -v ".git" | wc -l)"
+	@echo "Lines of code:   $$(find . -name "*.sv" | xargs wc -l 2>/dev/null | tail -1)"
+	@echo "README files:   $$(find . -name "README.md" | grep -v ".git" | wc -l)"
+	@echo "Chapters:       $$(ls -d 0*/ | wc -l)"
+	@echo "Examples:       $$(find . -path "*/examples/*.sv" | grep -v ".git" | wc -l)"
+	@echo "Commits:        $$(git rev-list --count HEAD)"
+	@echo ""
+
+help:
+	@echo "UVM-SV Cookbook - SystemVerilog/UVM Learning Repository"
+	@echo ""
+	@echo "GitHub: https://github.com/jingzhoushii/uvm-sv-cookbook"
+	@echo ""
+	@echo "Getting Started:"
+	@echo "  1. Clone: git clone https://github.com/jingzhoushii/uvm-sv-cookbook.git"
+	@echo "  2. Build: cd <chapter> && make"
+	@echo "  3. Test:  cd regress && python3 run.py"
+	@echo ""
+	@echo "For more information, see README.md"
