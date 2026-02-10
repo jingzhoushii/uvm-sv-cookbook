@@ -1,9 +1,78 @@
-// Testbench for threads
+// ============================================================================
+// Testbench: tb_threads
+// 功能: 验证 SystemVerilog 线程通信机制
+// 知识点: fork/join, wait, semaphore, mailbox, event
+// ============================================================================
 `timescale 1ns/1ps
+
 module tb_threads;
+    // ------------------------------------------------------------------------
+    // 线程通信机制
+    // ------------------------------------------------------------------------
+    int counter = 0;                    // 共享计数器
+    
+    semaphore sem;                       // 信号量：控制资源访问
+    mailbox #(int) mb;                   // 邮箱：线程间传递数据
+    event done;                          // 事件：线程间同步
+    
+    // ------------------------------------------------------------------------
+    // 任务：生产者线程
+    // ------------------------------------------------------------------------
+    task producer(int id, int count);
+        for (int i = 0; i < count; i++) begin
+            mb.put(i * id);              // 发送数据到邮箱
+            $display("[P%d] Produced: %0d", id, i * id);
+            #10;
+        end
+        $display("[P%d] Producer finished", id);
+    endtask
+    
+    // ------------------------------------------------------------------------
+    // 任务：消费者线程
+    // ------------------------------------------------------------------------
+    task consumer(int id);
+        int val;
+        forever begin
+            mb.get(val);                 // 从邮箱接收数据
+            $display("[C%d] Consumed: %0d", id, val);
+            counter++;
+            if (counter >= 6) -> done;   // 触发完成事件
+        end
+    endtask
+    
+    // ------------------------------------------------------------------------
+    // 主测试程序
+    // ------------------------------------------------------------------------
     initial begin
-        $display("Threads testbench");
-        #100; $finish;
+        $display("========================================");
+        $display("  SystemVerilog Threads Demo");
+        $display("========================================");
+        
+        // 初始化通信机制
+        sem = new(2);    // 2 个资源槽位
+        mb = new();      // 创建邮箱
+        
+        // 并行启动生产和消费线程
+        fork
+            producer(1, 3);   // 生产者 1：产生 3 个数据
+            producer(2, 3);   // 生产者 2：产生 3 个数据
+            consumer(1);      // 消费者
+        join_none
+        
+        // 等待完成事件
+        @(done);
+        $display("\nAll tasks completed!");
+        $display("Total items processed: %0d", counter);
+        
+        #50; $finish;
     end
-    initial begin $dumpfile("dump.vcd"); $dumpvars(0, tb_threads); end
+    
+    // ------------------------------------------------------------------------
+    // 波形记录
+    // ------------------------------------------------------------------------
+    initial begin
+        $dumpfile("dump.vcd");
+        $dumpvars(0, tb_threads);
+    end
+    
 endmodule
