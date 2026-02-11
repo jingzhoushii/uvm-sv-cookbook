@@ -1,56 +1,143 @@
-# Learning Paths - 三条学习曲线
+# 🛤️ 学习路径
 
-## 选择你的路线
+## 概述
 
-### 🚀 路线 A：快速上手（0 → 初级验证工程师）
-**目标**：应届生 / 转行
+本项目提供完整的学习路径，从 SystemVerilog 基础到 UVM 专家级别。
 
-| 周 | 内容 | 时间 |
-|----|------|------|
-| 1-2 | SV 基础（01-sv-fundamentals） | 2 周 |
-| 3-4 | UVM 核心（02-06） | 2 周 |
-| 5-6 | 基础项目实践 | 2 周 |
+```mermaid
+graph LR
+    A[初级 2周] --> B[中级 4周]
+    B --> C[高级 6周]
+    C --> D[专家 8周]
+```
 
-**重点**：快速跑通第一个 test
+## 路径对比
 
-### 🛠️ 路线 B：工程进阶（初中级 → 中高级）
-**目标**：1-3 年经验
+| 路径 | 周期 | 难度 | 目标 |
+|------|------|------|------|
+| ⚡ 初级 | 2 周 | ⭐ | 掌握基础 |
+| 🛠️ 中级 | 4 周 | ⭐⭐ | 独立开发 |
+| 🏗️ 高级 | 6 周 | ⭐⭐⭐ | 复杂验证 |
+| 🎓 专家 | 8 周 | ⭐⭐⭐⭐ | 架构设计 |
 
-| 周 | 内容 | 时间 |
-|----|------|------|
-| 1-2 | 序列高级（07） | 1 周 |
-| 3-4 | 寄存器模型（09） | 1 周 |
-| 5-6 | 性能优化（13） | 1 周 |
-| 7-8 | 形式验证（14） | 1 周 |
+## 推荐路径
 
-**重点**：真实项目经验
+### 初级路径（2周）
 
-### 🏗️ 路线 C：架构设计（中高级 → 骨干）
-**目标**：3+ 年经验
+**目标**: 掌握 SystemVerilog 和 UVM 基础
 
-| 周 | 内容 | 时间 |
-|----|------|------|
-| 1-2 | 工业级 Scoreboard | 1 周 |
-| 3-4 | VIP 开发 | 2 周 |
-| 5-6 | 完整项目 | 3 周 |
+```
+Week 1: SystemVerilog 基础
+├── 01-data-types/
+├── 02-classes-oop/
+├── 03-interfaces/
+└── 04-threads-communication/
 
-**重点**：设计验证平台架构
+Week 2: UVM 组件
+├── 01-uvm-basics/
+├── 02-uvm-components/
+├── 03-sequences/
+└── 04-simple-agent/
+```
 
----
+[开始初级路径 →](primary.md){ .md-button }
 
-## 学习入口
+### 中级路径（4周）
 
-| 路线 | 起点 | 终点 |
-|------|------|------|
-| A | `01-sv-fundamentals/` | `06-configuration/` |
-| B | `07-sequences-advanced/` | `14-formal-verification/` |
-| C | `projects/mini_soc_uvm/` | 自定义项目 |
+**目标**: 掌握寄存器模型、序列、TLM、覆盖率
 
----
+```
+Week 1: 寄存器模型
+├── 09-register-model-ral/
+└── 10-reg-sequence/
 
-## 建议
+Week 2: 高级序列
+├── 03-sequences/
+└── 04-virtual-sequences/
 
-- **应届生**：走 A 路线，补基础
-- **1-3 年**：走 B 路线，补进阶
-- **3+ 年**：走 C 路线，做架构
+Week 3: TLM 通信
+├── 05-tlm-communication/
+└── 06-tlm-fifos/
 
+Week 4: 覆盖率
+└── 08-coverage/
+```
+
+[开始中级路径 →](intermediate.md){ .md-button }
+
+### 高级路径（6周）
+
+**目标**: 掌握低功耗、中断、形式验证、性能优化
+
+```
+Week 1-2: 低功耗验证
+└── 11-low-power/
+
+Week 3-4: 中断验证
+└── 12-interrupt/
+
+Week 5: 形式验证
+└── 13-formal-verification/
+
+Week 6: 性能优化
+└── 14-performance/
+```
+
+[开始高级路径 →](advanced.md){ .md-button }
+
+### 专家路径（8周）
+
+**目标**: UVM 源码分析、自定义库开发
+
+```
+Week 1-2: UVM 源码分析
+└── 15-uvm-source/
+
+Week 3-4: 自定义库开发
+└── 16-uvm-extensions/
+
+Week 5-6: UVM 1800.2
+└── 16-uvm-1800-2-changes/
+
+Week 7-8: 项目重构
+└── Mini SoC 项目实战
+```
+
+[开始专家路径 →](expert.md){ .md-button }
+
+## 学习建议
+
+| 建议 | 说明 |
+|------|------|
+| 按顺序学习 | 每个路径有前置依赖 |
+| 动手实践 | 每章都有示例代码 |
+| 项目驱动 | 最后做 Mini SoC |
+| 持续迭代 | 多次复习 |
+
+## 项目实战
+
+完成学习后，建议实战：
+
+- [Mini SoC 项目](../projects/mini_soc/)
+- [UVM 源码分析](15-uvm-source/)
+- [自定义验证库](16-uvm-extensions/)
+
+## FAQ
+
+**Q: 我应该从哪个路径开始？**
+A: 如果你是初学者，从初级路径开始。如果有经验，评估后选择合适的路径。
+
+**Q: 每个路径需要多少时间？**
+A: 每周约 10-15 小时，取决于个人基础。
+
+**Q: 可以跳过某些章节吗？**
+A: 可以，但建议按顺序学习以建立完整知识体系。
+
+**Q: 如何验证学习效果？**
+A: 完成 Mini SoC 项目并通过回归测试。
+
+## 相关资源
+
+- [GitHub](https://github.com/jingzhoushii/uvm-sv-cookbook)
+- [EDA Playground](https://edaplayground.com/)
+- [Verification Academy](https://verificationacademy.com/)

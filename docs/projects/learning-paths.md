@@ -1,153 +1,211 @@
+---
+hide:
+  - navigation
+---
+
 # 🛤️ 学习路径选择
 
-## 路径对比
+## 概述
 
-| 路径 | 周期 | 内容 | 难度 |
-|------|------|------|------|
-| ⚡ Fast Track | 2 周 | 核心概念 | ⭐⭐ |
-| 🛠️ Engineer | 4 周 | 完整体系 | ⭐⭐⭐ |
-| 🏗️ Architect | 6 周 | 工业实战 | ⭐⭐⭐⭐ |
-
----
-
-## ⚡ Fast Track (2 周)
-
-### 目标
-快速掌握 UVM 验证核心概念，能够读懂和修改现有测试平台。
-
-### 周计划
-
-```mermaid
-gantt
-    title Fast Track Schedule
-    dateFormat  YYYY-MM-DD
-    section Week 1
-    SV Basics      :active, a1, 2024-01-01, 3d
-    UVM Phases     :active, a2, 2024-01-04, 3d
-    First Test     :active, a3, 2024-01-07, 1d
-    section Week 2
-    Sequences      :active, b1, 2024-01-08, 3d
-    Agents         :active, b2, 2024-01-11, 2d
-    Mini SoC       :active, b3, 2024-01-13, 2d
-```
-
-### 必读章节
-
-1. [UVM 阶段](../02-uvm-phases/01-phases.md)
-2. [第一个测试](../quick-start.md)
-3. [序列基础](../03-sequences/01-sequences.md)
-4. [Mini SoC 项目](mini_soc/index.md)
-
-### 在线运行
-
-[:fontawesome-solid-play: Start Fast Track](https://edaplayground.com/){ .md-button .md-button--primary }
-
----
-
-## 🛠️ Engineer (4 周)
-
-### 目标
-建立完整的验证知识体系，能够独立搭建测试平台。
-
-### 周计划
-
-```mermaid
-gantt
-    title Engineer Schedule
-    dateFormat  YYYY-MM-DD
-    section Week 1
-    SV Fundamentals :active, a1, 2024-01-01, 5d
-    section Week 2
-    UVM Components  :active, b1, 2024-01-08, 5d
-    section Week 3
-    Advanced TLM    :active, c1, 2024-01-15, 5d
-    section Week 4
-    Mini SoC Project:active, d1, 2024-01-22, 5d
-```
-
-### 核心技能
-
-- ✅ SystemVerilog OOP
-- ✅ UVM 组件体系
-- ✅ 序列和配置机制
-- ✅ TLM 通信
-- ✅ 覆盖率模型
-- ✅ 回归框架
-
-### 实战项目
-
-完成 Mini SoC 所有测试用例。
-
----
-
-## 🏗️ Architect (6 周)
-
-### 目标
-掌握工业级验证平台设计，具备架构师思维。
-
-### 里程碑
+本项目提供 4 个完整学习路径，从入门到专家级别。
 
 ```mermaid
 graph LR
-    M1[Phase 1] --> M2[Phase 2]
-    M2 --> M3[Phase 3]
-    M3 --> M4[Phase 4]
-    M4 --> M5[Phase 5]
-    M5 --> ARCH[Verification Architect]
+    A[初级 2周] --> B[中级 4周]
+    B --> C[高级 6周]
+    C --> D[专家 8周]
 ```
 
-### 进阶主题
+## 路径对比
 
-| 周次 | 主题 | 产出 |
-|------|------|------|
-| 1-2 | 平台架构设计 | 架构文档 |
-| 3-4 | 参考模型开发 | 行为模型 |
-| 5-6 | 覆盖率闭合 | 验证报告 |
+| 路径 | 周期 | 难度 | 预计时长 | 目标 |
+|------|------|------|----------|------|
+| ⚡ [初级](primary.md) | 2 周 | ⭐ | 20-30h | 掌握基础 |
+| 🛠️ [中级](intermediate.md) | 4 周 | ⭐⭐ | 40-60h | 独立开发 |
+| 🏗️ [高级](advanced.md) | 6 周 | ⭐⭐⭐ | 60-90h | 复杂验证 |
+| 🎓 [专家](expert.md) | 8 周 | ⭐⭐⭐⭐ | 80-120h | 架构设计 |
 
-### 学习成果
-
-- 能够设计可扩展验证平台
-- 掌握覆盖率驱动验证方法
-- 理解工业级回归流程
-
----
-
-## 🎯 选择建议
+## 选择建议
 
 ```mermaid
 graph TD
-    A[开始学习] --> B{时间紧迫?}
-    B -->|是| C[Fast Track]
-    B -->|否| D{需要系统学习?}
-    D -->|是| E[Engineer]
-    D -->|否| F{要成为架构师?}
-    F -->|是| G[Architect]
-    F -->|否| C
+    A[开始] --> B{经验?}
+    B -->|无| C[初级路径]
+    B -->|1-2年| D{熟悉UVM?}
+    D -->|否| C
+    D -->|是| E{项目经验?}
+    E -->|少| F[中级路径]
+    E -->|多| G{深入源码?}
+    G -->|否| H[高级路径]
+    G -->|是| I[专家路径]
 ```
 
----
+## 初级路径 ⚡
 
-## 📚 推荐资源
+**目标**: SystemVerilog + UVM 基础
 
-### 书籍
-- 《UVM实战》
-- 《SystemVerilog验证》
-- 《芯片验证漫游指南》
+```
+Week 1: SV 基础
+├── 数据类型
+├── OOP 类
+├── 接口
+└── 线程通信
 
-### 在线
-- [EDAPlayground](https://edaplayground.com/)
+Week 2: UVM 组件
+├── UVM 基础
+├── 组件层次
+├── 序列基础
+└── 简单 Agent
+```
+
+[开始学习 →](primary.md){ .md-button }
+
+## 中级路径 🛠️
+
+**目标**: 寄存器模型、TLM、覆盖率
+
+```
+Week 1: 寄存器模型
+├── 寄存器块
+├── 适配器
+└── 寄存器序列
+
+Week 2: 高级序列
+├── Virtual Sequence
+├── 配置数据库
+└── TLM 基础
+
+Week 3: TLM 高级
+├── Analysis Port
+├── TLM FIFO
+└── TLM 2.0
+
+Week 4: 覆盖率
+├── Coverage 基础
+├── 交叉覆盖
+└── Mini SoC
+```
+
+[开始学习 →](intermediate.md){ .md-button }
+
+## 高级路径 🏗️
+
+**目标**: 低功耗、中断、形式验证、性能
+
+```
+Week 1-2: 低功耗
+├── 电源域
+├── 功耗序列
+└── 功耗覆盖
+
+Week 3-4: 中断
+├── 中断机制
+├── 中断序列
+└── 中断覆盖
+
+Week 5: 形式验证
+├── 基础
+├── SVA 断言
+└── UVM+形式
+
+Week 6: 性能优化
+├── 优化基础
+├── 序列优化
+└── 覆盖优化
+```
+
+[开始学习 →](advanced.md){ .md-button }
+
+## 专家路径 🎓
+
+**目标**: UVM 源码、自定义库、架构
+
+```
+Week 1-2: 源码分析
+├── 工厂机制
+├── 相位机制
+└── TLM 实现
+
+Week 3-4: 自定义库
+├── 组件基类
+├── 序列库
+└── 报告系统
+
+Week 5-6: UVM 1800.2
+├── 虚拟类
+├── 新特性
+└── 迁移指南
+
+Week 7-8: 项目重构
+├── Mini SoC 重构
+├── 架构设计
+└── 技术分享
+```
+
+[开始学习 →](expert.md){ .md-button }
+
+## 每周时间规划
+
+| 路径 | 每日 | 每周 | 總計 |
+|------|------|------|------|
+| 初级 | 1-2h | 10-15h | 20-30h |
+| 中级 | 1-2h | 10-15h | 40-60h |
+| 高级 | 1-2h | 10-15h | 60-90h |
+| 专家 | 1-2h | 10-15h | 80-120h |
+
+## 前置要求
+
+| 路径 | 前置要求 |
+|------|----------|
+| 初级 | 编程基础 + 数字电路 |
+| 中级 | 初级路径完成 |
+| 高级 | 中级路径完成 |
+| 专家 | 高级路径 + 2-3 年经验 |
+
+## 学习建议
+
+### 1. 按顺序学习
+每个路径有前置依赖，建议按顺序完成。
+
+### 2. 动手实践
+每章都有示例代码，建议边学边练。
+
+### 3. 项目驱动
+最后做 Mini SoC 项目，综合应用所学。
+
+### 4. 持续迭代
+多次复习，巩固知识。
+
+## 检查清单
+
+完成路径后，检查：
+
+- [ ] 核心知识点掌握
+- [ ] 能独立开发
+- [ ] 完成实践项目
+- [ ] 通过考核测试
+
+## 认证建议
+
+专家路径后，可考虑：
+
+- Accellera UVM 认证
+- VCS 认证工程师
+- Formal 认证
+
+## 相关资源
+
+- [GitHub](https://github.com/jingzhoushii/uvm-sv-cookbook)
+- [EDA Playground](https://edaplayground.com/)
 - [Verification Academy](https://verificationacademy.com/)
-
-### 视频
-- YouTube: UVM Tutorials
-- Bilibili: 芯片验证
+- [IEEE 1800.2](https://ieeexplore.ieee.org/)
 
 ---
 
-## 🚀 开始学习
+<div align="center">
 
-选择你的路径：
+**选择你的路径，开始学习！**
 
-[Fast Track ⚡](fast-track.md){ .md-button }
-[Engineer 🛠️](engineer.md){ .md-button }
-[Architect 🏗️](architect.md){ .md-button }
+[初级 ⚡](primary.md) | [中级 🛠️](intermediate.md) | [高级 🏗️](advanced.md) | [专家 🎓](expert.md)
+
+</div>
