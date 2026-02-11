@@ -1,6 +1,6 @@
 # Makefile - 02-interrupt-agent
 SIM ?= vcs
-UVM_HOME ?= /opt/uvm-1800.2-2021
+UVM_HOME ?= $(abspath ../uvm)
 
 SRC = $(wildcard examples/*.sv)
 

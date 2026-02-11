@@ -1,6 +1,6 @@
 # Makefile - 04-error-injection
 SIM ?= vcs
-UVM_HOME ?= /opt/uvm-1800.2-2021
+UVM_HOME ?= $(abspath ../uvm)
 
 SRC = $(wildcard examples/*.sv)
 

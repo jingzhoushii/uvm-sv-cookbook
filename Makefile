@@ -3,7 +3,7 @@
 # ============================================================================
 
 SIM ?= vcs
-UVM_HOME ?= /opt/uvm-1800.2-2021
+UVM_HOME ?= $(abspath uvm)
 
 .PHONY: all help clean test docs stats
 
