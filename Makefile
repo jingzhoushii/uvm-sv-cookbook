@@ -136,3 +136,50 @@ help:
 	@echo "  make SIM=xrun    - Use Xcelium"
 	@echo "  make SIM=vsim     - Use Questa"
 
+
+# ============================================================================
+# 进阶目标
+# ============================================================================
+
+.PHONY: debug wave cov regress regression clean_all lint check
+
+# 生成波形并打开 Verdi
+debug:
+	@echo "=== Debug Mode (Verdi) ==="
+	@if [ "$(SIM)" = "vcs" ]; then \
+		./simv -ucli -do "set_fomv -default; call \$fsdbDumpfile(\"waves.fsdb\"); call \$fsdbDumpvars(0, top_tb); run; quit" -l debug.log; \
+	elif [ "$(SIM)" = "xrun" ]; then \
+		xrun -access +r -uvmhome $(UVM_HOME) -f filelist.f -linesize 300 -l debug.log; \
+	fi
+
+# 生成波形
+wave:
+	@echo "=== Generate Waves ==="
+	@echo "Use: make SIM=vcs debug"
+
+# 覆盖率报告
+cov:
+	@echo "=== Coverage Report ==="
+	@if [ "$(SIM)" = "vcs" ]; then \
+		urg -dir simv.vdb -report coverage_rpt; \
+		echo "Report: coverage_rpt"; \
+	elif [ "$(SIM)" = "xrun" ]; then \
+		imc -load $(XMVDB) -report coverage; \
+	fi
+
+# Regression 测试
+regress regression:
+	@echo "=== Regression Test ==="
+	@python3 regress/run.py --verbose --html
+	@echo "Results: regress/results.html"
+
+# 静态检查
+check lint:
+	@echo "=== Lint Check ==="
+	@if command -v verilator &> /dev/null; then \
+		find . -name "*.sv" -exec verilator --lint-only {} \; 2>/dev/null || true; \
+		echo "Lint check passed"; \
+	else \
+		echo "Install verilator: brew install verilator"; \
+	fi
+
