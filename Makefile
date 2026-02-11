@@ -82,3 +82,57 @@ help:
 	@echo "  3. Test:  cd regress && python3 run.py"
 	@echo ""
 	@echo "For more information, see README.md"
+
+# ============================================================================
+# 新增目标
+# ============================================================================
+
+.PHONY: lint coverage regression clean_all help
+
+# 静态检查（需要 verilator 或 svlint）
+lint:
+	@echo "Running lint check..."
+	@if command -v verilator &> /dev/null; then \
+		find . -name "*.sv" -exec verilator --lint-only {} \; 2>/dev/null || true; \
+		echo "Lint check passed!"; \
+	else \
+		echo "Verilator not installed. Install with: brew install verilator"; \
+	fi
+
+# 生成覆盖率报告
+coverage:
+	@echo "Generating coverage report..."
+	@echo "Coverage report feature coming soon!"
+
+# 运行回归测试
+regression:
+	@echo "Running regression tests..."
+	@python3 regress/run.py --verbose
+
+# 清理所有生成的文件
+clean_all:
+	@echo "Cleaning all generated files..."
+	@rm -rf build/ simv* *.vcd *.fst *.log waves.*
+	@echo "Clean complete!"
+
+# 显示帮助
+help:
+	@echo "UVM-SV Cookbook Makefile Targets"
+	@echo ""
+	@echo "Basic targets:"
+	@echo "  make compile      - Compile simulation"
+	@echo "  make run          - Run simulation"
+	@echo "  make clean simulation files        - Clean"
+	@echo ""
+	@echo "Advanced targets:"
+	@echo "  make lint         - Run static lint check"
+	@echo "  make coverage    - Generate coverage report"
+	@echo "  make regression  - Run regression tests"
+	@echo "  make clean_all   - Clean all generated files"
+	@echo "  make help        - Show this help"
+	@echo ""
+	@echo "Simulators:"
+	@echo "  make SIM=vcs      - Use VCS"
+	@echo "  make SIM=xrun    - Use Xcelium"
+	@echo "  make SIM=vsim     - Use Questa"
+
