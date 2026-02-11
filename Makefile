@@ -183,3 +183,29 @@ check lint:
 		echo "Install verilator: brew install verilator"; \
 	fi
 
+
+# ============================================================================
+# UVM 编译
+# ============================================================================
+
+UVM_SRC = uvm/src
+UVM_FLIST = uvm/filelist.f
+
+# UVM 编译宏
+UVM_DEFINES = +define+UVM_NO_DPI
+
+.PHONY: uvm_compile uvm_clean
+
+# 编译 UVM
+uvm_compile:
+	@echo "=== Compiling UVM 1.2 ==="
+	vcs -sverilog $(UVM_FLIST) \
+		$(UVM_DEFINES) \
+		+incdir+$(UVM_SRC) \
+		-l uvm_comp.log
+	@echo "UVM compiled successfully!"
+
+# 清理 UVM 编译产物
+uvm_clean:
+	rm -rf uvm_comp.log *.o *~
+
