@@ -1,0 +1,67 @@
+# Mini SoC Complete Regression Configuration
+# ==========================================
+
+suites:
+  smoke:
+    tests: [smoke_test]
+    timeout: 60
+    waves: 0
+    
+  basic:
+    tests: [smoke_test, random_test, mem_test]
+    timeout: 120
+    waves: 0
+    
+  peripheral:
+    tests: [dma_test, uart_test]
+    timeout: 180
+    waves: 0
+    
+  stress:
+    tests: [stress_test, concurrent_test]
+    timeout: 300
+    waves: 0
+    
+  system:
+    tests: [system_test, boot_enh_test]
+    timeout: 200
+    waves: 0
+    
+  full:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+      - dma_test
+      - uart_test
+      - stress_test
+      - concurrent_test
+      - system_test
+      - boot_enh_test
+    timeout: 600
+    waves: 0
+
+modes:
+  ci:
+    suites: [smoke]
+    
+  daily:
+    suites: [smoke, basic]
+    
+  nightly:
+    suites: [smoke, basic, peripheral]
+    
+  weekly:
+    suites: [smoke, basic, peripheral, stress, system]
+    
+  release:
+    suites: [full]
+
+coverage:
+  enabled: 1
+  goals:
+    addr: 80
+    data: 60
+    rw: 90
+    overall: 75
+
