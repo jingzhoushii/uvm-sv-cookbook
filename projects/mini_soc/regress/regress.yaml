@@ -1,0 +1,53 @@
+# Mini SoC Regression Configuration
+# ====================================
+
+# Test Suite Definitions
+suites:
+  smoke:
+    tests:
+      - smoke_test
+    description: "Smoke test suite"
+    
+  functional:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+    description: "Functional test suite"
+    
+  stress:
+    tests:
+      - smoke_test
+      - random_test
+      - stress_test
+      - mem_test
+      - dma_test
+    description: "Stress test suite"
+    
+  full:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+      - dma_test
+      - stress_test
+    description: "Full regression suite"
+
+# Test Configuration
+config:
+  timeout: 600      # 10 minutes per test
+  waves: 0         # Don't save waves by default
+  coverage: 1      # Enable coverage
+  seed: random    # Random seed
+  
+# Run Modes
+modes:
+  nightly:
+    suites: [smoke]
+    
+  weekly:
+    suites: [smoke, functional]
+    
+  release:
+    suites: [smoke, functional, stress]
+
