@@ -1,0 +1,83 @@
+# Mini SoC Industrial Regression Configuration
+# =======================================
+# 支持: CI, Daily, Nightly, Weekly, Release 模式
+
+suites:
+  # CI 模式 - 快速冒烟
+  ci:
+    tests: [smoke_test]
+    timeout: 60
+    waves: 0
+    parallel: 1
+    
+  # Daily 模式 - 基础功能
+  daily:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+    timeout: 120
+    waves: 0
+    parallel: 2
+    
+  # Nightly 模式 - 完整功能
+  nightly:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+      - dma_test
+      - uart_test
+    timeout: 300
+    waves: 0
+    parallel: 3
+    
+  # Weekly 模式 - 压力测试
+  weekly:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+      - dma_test
+      - uart_test
+      - stress_test
+      - concurrent_test
+    timeout: 600
+    waves: 0
+    parallel: 4
+    
+  # Release 模式 - 全部测试
+  release:
+    tests:
+      - smoke_test
+      - random_test
+      - mem_test
+      - dma_test
+      - uart_test
+      - stress_test
+      - concurrent_test
+      - system_test
+      - boot_enh_test
+      - bus_error_test
+    timeout: 900
+    waves: 0
+    parallel: 4
+
+modes:
+  ci: [ci]
+  daily: [daily]
+  nightly: [nightly]
+  weekly: [weekly]
+  release: [release]
+
+coverage_goals:
+  transaction: 80
+  scenario: 60
+  system: 75
+  overall: 72
+
+quality_gates:
+  ci_pass_rate: 100
+  nightly_pass_rate: 95
+  release_pass_rate: 100
+
