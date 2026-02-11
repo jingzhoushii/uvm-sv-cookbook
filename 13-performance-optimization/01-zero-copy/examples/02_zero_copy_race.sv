@@ -1,5 +1,10 @@
 // ============================================================================
-// Zero-Copy 数据竞争风险
+// Zero-Copy 数据竞争风险演示
+// ============================================================================
+// ⚠️ WARNING: Zero-copy performance optimization
+// Risk: Data race if sequence modifies transaction after get_next_item()
+//       returns but before item_done()
+// Mitigation: Ensure blocking drive() or use copy() for critical fields
 // ============================================================================
 
 `timescale 1ns/1ps
