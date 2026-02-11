@@ -1,0 +1,158 @@
+name: Code Style Check
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - '**.sv'
+      - '.github/workflows/style-check.yml'
+      - '.verible/**'
+      - '.svlint.yaml'
+      - 'STYLE_GUIDE.md'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.sv'
+      - '.github/workflows/style-check.yml'
+      - '.verible/**'
+      - '.svlint.yaml'
+      - 'STYLE_GUIDE.md'
+
+jobs:
+  verible-check:
+    name: Verible Style Check
+    runs-on: ubuntu-latest
+    container: ghcr.io/chipsalliance/verible/verible:latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Get changed SV files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.sv
+            **/*.svh
+            
+      - name: Check formatting with Verible
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Checking: $file"
+            verible-format --check "$file" || {
+              echo "::warning file=$file::Formatting issues found. Run 'verible-format -i $file' to fix."
+            }
+          done
+        
+      - name: Show formatting diff
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "## Verible Formatting Report" >> $GITHUB_STEP_SUMMARY
+          echo '```diff' >> $GITHUB_STEP_SUMMARY
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "--- $file ---" >> $GITHUB_STEP_SUMMARY
+            verible-format --show-diff "$file" 2>&1 | head -50 >> $GITHUB_STEP_SUMMARY || true
+          done
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  svlint-check:
+    name: SV-Lint Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Install SV-Lint
+        run: |
+          cargo install sv-lint --version 0.1.0 || {
+            # Fallback: download binary
+            curl -L https://github.com/dalance/sv-lint/releases/download/v0.1.0/svlint-x86_64-unknown-linux-gnu.tar.gz | tar xz
+            chmod +x svlint
+            sudo mv svlint /usr/local/bin/
+          }
+          
+      - name: Get changed SV files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.sv
+            **/*.svh
+            
+      - name: Run SV-Lint
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Linting: $file"
+            svlint "$file" || {
+              echo "::warning file=$file::Lint issues found"
+            }
+          done
+
+  uvm-conventions:
+    name: UVM Conventions
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Get changed SV files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.sv
+            **/*.svh
+            
+      - name: Check UVM Conventions
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "## UVM Convention Check" >> $GITHUB_STEP_SUMMARY
+          
+          # Check for uvm_component_utils
+          grep -l "uvm_component" ${{ steps.changed-files.outputs.all_changed_files }} | while read file; do
+            if ! grep -q "\`uvm_component_utils" "$file"; then
+              echo "::warning file=$file::Missing \`uvm_component_utils in component"
+            fi
+          done
+          
+          # Check for uvm_object_utils
+          grep -l "uvm_sequence\|uvm_object" ${{ steps.changed-files.outputs.all_changed_files }} | while read file; do
+            if ! grep -q "\`uvm_object_utils" "$file"; then
+              echo "::warning file=$file::Missing \`uvm_object_utils in object"
+            fi
+          done
+          
+          # Check for new without name
+          if grep -n "new(" ${{ steps.changed-files.outputs.all_changed_files }} | grep -v "new(" | grep -v '"'; then
+            echo "::warning::Potential new() without name parameter"
+          fi
+
+  summary:
+    name: Style Check Summary
+    runs-on: ubuntu-latest
+    needs: [verible-check, svlint-check, uvm-conventions]
+    if: always()
+    
+    steps:
+      - name: Check results
+        run: |
+          echo "## Code Style Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Verible: ${{ needs.verible-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- SV-Lint: ${{ needs.svlint-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- UVM Conventions: ${{ needs.uvm-conventions.result }}" >> $GITHUB_STEP_SUMMARY
+          
+          if [[ "${{ needs.verible-check.result }}" == "failure" ]] || \
+             [[ "${{ needs.svlint-check.result }}" == "failure" ]]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "❌ Some checks failed. Please fix the issues above." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          else
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "✅ All checks passed!" >> $GITHUB_STEP_SUMMARY
+          fi

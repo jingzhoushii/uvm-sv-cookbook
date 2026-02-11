@@ -1,0 +1,36 @@
+# SV-Lint Configuration
+# ====================
+
+rules:
+  # Enable all rules
+  all: true
+
+  # Disable specific rules
+  disable:
+    - long-line
+    - trailing-whitespace
+
+rulesets:
+  # Google style (recommended)
+  google:
+    enable:
+      - case-genvar
+      - case-begin-keyword
+      - case-if
+      - indentation
+      - keyword-case
+      - name-length
+      - tab-character
+
+  # UVM specific
+  uvm:
+    enable:
+      - uvm-class-base
+      - uvm-component-registration
+      - uvm-object-registration
+      - uvm-macro-usage
+
+limits:
+  max-line-length: 120
+  max-name-length: 64
+  max-indent-depth: 10

@@ -1,0 +1,30 @@
+# Verible SystemVerilog Style Configuration
+# =========================================
+
+# Case handling
+case_sensitive: true
+
+# Indentation
+indentation_spaces: 4
+
+# Wrapping
+wrap_spaces: 4
+
+# Column limit
+column_limit: 120
+
+# Brace placement
+block_begin_same_line: true
+block_end_same_line: false
+
+# Spaces
+space_after_keywords: true
+space_before_closing_paren: false
+space_inside_braces: false
+
+# Named parameters
+named_parameter_indentation: 4
+named_parameter_newline: false
+
+# Port declarations
+port_declaration_indentation: 2
