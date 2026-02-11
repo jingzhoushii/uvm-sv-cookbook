@@ -29,3 +29,16 @@ tb/test/stress_test.sv
 
 # Top
 tb/tb_top.sv
+
+# Reference Model
+reg/ref_model.sv
+
+# Enhanced Virtual Sequences
+tb/virt_seq/system_vseq.sv
+tb/virt_seq/concurrent_vseq.sv
+tb/virt_seq/boot_vseq_enh.sv
+
+# System Tests
+tb/test/system_test.sv
+tb/test/concurrent_test.sv
+tb/test/boot_enh_test.sv
