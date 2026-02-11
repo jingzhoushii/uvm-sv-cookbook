@@ -1,68 +1,26 @@
 # 👥 贡献者
 
-感谢以下工程师的贡献！
-
----
-
-## 🌟 核心贡献者
+## 核心贡献者
 
 | 贡献者 | 贡献内容 |
 |--------|----------|
 | @jingzhoushii | 项目创建者，完整架构设计 |
 
----
+## 主要贡献
 
-## 📝 代码贡献者
+| 日期 | 贡献 | 贡献者 |
+|------|------|--------|
+| 2026-02-11 | Phase 1 优化（static/copy） | Kimi AI |
+| 2026-02-11 | Phase 2 优化（perf/debug） | Kimi AI |
+| 2026-02-11 | Phase 3（formal/UVM1.2） | Kimi AI |
 
-按贡献时间排序：
+## 如何贡献
 
-- 初始架构设计
-- 11 章节内容
-- 162+ 示例文件
-- 8,793+ 行代码
+1. Fork 项目
+2. 创建功能分支
+3. 提交 Pull Request
 
----
+## 反馈
 
-## 🎯 如何贡献
-
-### 贡献方式
-
-1. **报告 Bug**
-   - 提交 Issue 描述问题
-   - 提供复现步骤
-
-2. **建议新内容**
-   - 提交 Issue 说明需求
-   - 讨论实现方案
-
-3. **提交代码**
-   - Fork 项目
-   - 创建功能分支
-   - 提交 Pull Request
-
-### 贡献指南
-
-参见 [CONTRIBUTING.md](./CONTRIBUTING.md)
-
----
-
-## 📜 贡献者协议
-
-通过贡献代码，你同意将代码开源许可。
-
----
-
-## 🏆 贡献者等级
-
-| 等级 | 要求 |
-|------|------|
-| ⭐ Contributor | 首次贡献 |
-| ⭐⭐ Contributor | 3+ 次贡献 |
-| ⭐⭐⭐ Maintainer | 主要维护者 |
-
----
-
-## 📧 联系
-
-有问题请联系：jingzhoushii@gmail.com
+[提交 Issue](https://github.com/jingzhoushii/uvm-sv-cookbook/issues)
 
