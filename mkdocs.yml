@@ -1,0 +1,69 @@
+# uvm-sv-cookbook Documentation Site
+site_name: UVM & SystemVerilog Cookbook
+site_description: Industrial-grade verification learning platform
+site_author: Jingzhou Shi
+repo_url: https://github.com/jingzhoushii/uvm-sv-cookbook
+
+# Theme
+theme:
+  name: material
+  palette: 
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/toggle-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - content.code.copy
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.details
+  - pymdownx.marp
+  - tables
+  - footnotes
+
+# Plugins
+plugins:
+  - search
+  - mkdocs-video
+  - table-reader
+
+# Custom CSS
+extra_css:
+  - assets/stylesheets/extra.css
+
+# Navigation
+nav:
+  - Home: index.md
+  - Quick Start:
+      - Installation: quick-start.md
+      - First Test: first-test.md
+  - SV Fundamentals:
+      - Data Types: 01-sv-fundamentals/01-data-types.md
+      - OOP Classes: 01-sv-fundamentals/02-classes-oop.md
+      - Interfaces: 01-sv-fundamentals/03-interfaces.md
+      - Threads & Communication: 01-sv-fundamentals/04-threads-communication.md
+      - Randomization: 01-sv-fundamentals/05-randomization.md
+  - UVM Basics:
+      - UVM Phases: 02-uvm-phases/01-phases.md
+      - Component Hierarchy: 02-uvm-phases/02-component-hierarchy.md
+  - Projects:
+      - Mini SoC: projects/mini_soc/index.md
+      - Learning Paths: projects/learning-paths.md
+

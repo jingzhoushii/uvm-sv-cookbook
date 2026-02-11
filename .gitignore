@@ -1,20 +1,37 @@
-# Simulation
-*.vvp *.vpd *.vcd *.fst
+site/
+*.pyc
+__pycache__/
+.env
+.venv/
+venv/
 
-# VCS
-simv* DVEfiles/ urg_report/
+# MkDocs
+site/
+/site/*
+!site/.gitkeep
 
-# Xcelium
-xcelium.d/
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
 
-# Questa
-work/ *.wlf
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Logs
 *.log
-
-# OS
-.DS_Store *.swp *~
-
-# IDE
-.vscode/ *.sublime-*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

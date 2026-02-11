@@ -1,0 +1,4 @@
+[submodule "uvm"]
+    path = uvm
+    url = https://github.com/accellera-official/uvm
+    branch = uvm-1.2

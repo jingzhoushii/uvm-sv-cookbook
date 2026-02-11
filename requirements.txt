@@ -1,21 +1,4 @@
-# UVM-SV Cookbook Python Dependencies
-# ================================
-
-# 回归测试
-pyyaml>=6.0
-
-# 文档生成
-jinja2>=3.0
-
-# 代码质量
-pylint>=2.17
-
-# 覆盖率分析
-lxml>=4.9
-
-# 测试框架
-pytest>=7.0
-
-# 进度跟踪
-tqdm>=4.0
-
+mkdocs>=1.5.0
+mkdocs-material>=9.0.0
+mkdocs-video>=1.5.0
+mkdocs-table-reader-plugin>=1.0.0
